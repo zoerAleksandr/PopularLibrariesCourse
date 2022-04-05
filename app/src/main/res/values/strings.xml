@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">PopularLibrariesCourse</string>
+
+    // для login_activity.xml
+    <string name="hint_login">Логин</string>
+    <string name="hint_password">Пароль</string>
+    <string name="text_btn_login">Войти</string>
+    // Snackbar text успешный вход в систему
+    <string name="text_snackbar_by_success">Вход выполнен</string>
+    // Snackbar text ошибок входа в систему
+    <string name="error_text_empty_fields">Ошибка: Заполните все поля</string>
+    <string name="error_text_login">Ошибка: Несуществующий логин</string>
+    <string name="error_text_password">Ошибка: Неверный пароль</string>
+    <string name="error_text_unknown">Ошибка: Неизвестная ошибка</string>
 </resources>
