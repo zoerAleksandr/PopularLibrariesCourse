@@ -6,7 +6,7 @@
     tools:context=".LoginActivity">
 
     <LinearLayout
-        android:id="@+id/container"
+        android:id="@+id/container_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_login"
+                android:id="@+id/login_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_login"
@@ -34,7 +34,7 @@
             android:layout_marginTop="@dimen/margin_vertical_main_activity">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_password"
+                android:id="@+id/password_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_password"
@@ -43,7 +43,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/login_button"
             android:layout_width="@dimen/width_btn_login"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_vertical_main_activity"
@@ -52,8 +52,8 @@
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/progress_bar_size"
+        android:layout_height="@dimen/progress_bar_size"
         android:layout_gravity="center"
-        android:visibility="gone" />
+        android:visibility="visible" />
 </FrameLayout>

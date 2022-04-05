@@ -19,10 +19,10 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         setContentView(R.layout.activity_main)
         presenter = initPresenter()
         presenter.onAttach(this)
-        binding.btnLogin.setOnClickListener {
+        binding.loginButton.setOnClickListener {
             presenter.onLogin(
-                binding.editLogin.text.toString(),
-                binding.editPassword.text.toString(),
+                binding.loginEditText.text.toString(),
+                binding.passwordEditText.text.toString(),
             )
         }
     }
@@ -83,12 +83,12 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
     override fun setProgress(progress: Boolean) {
         if (progress) {
-            binding.container.alpha = 0.3f
-            binding.btnLogin.isEnabled = false
+            binding.containerLinearLayout.alpha = 0.3f
+            binding.loginButton.isEnabled = false
             binding.progressBar.visibility = View.VISIBLE
         } else {
-            binding.container.alpha = 1f
-            binding.btnLogin.isEnabled = true
+            binding.containerLinearLayout.alpha = 1f
+            binding.loginButton.isEnabled = true
             binding.progressBar.visibility = View.GONE
         }
     }
