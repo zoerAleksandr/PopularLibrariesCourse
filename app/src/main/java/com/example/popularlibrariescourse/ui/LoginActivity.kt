@@ -1,4 +1,4 @@
-package com.example.popularlibrariescourse
+package com.example.popularlibrariescourse.ui
 
 import android.os.Bundle
 import android.os.Handler
@@ -6,6 +6,8 @@ import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.popularlibrariescourse.R
+import com.example.popularlibrariescourse.app
 import com.example.popularlibrariescourse.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
@@ -28,7 +30,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     }
 
     private fun initPresenter(): LoginPresenter =
-        lastCustomNonConfigurationInstance as? LoginPresenter ?: LoginPresenter()
+        lastCustomNonConfigurationInstance as? LoginPresenter ?: LoginPresenter(app.api)
 
     override fun onRetainCustomNonConfigurationInstance(): Any = presenter
 

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".ui.LoginActivity">
 
     <LinearLayout
         android:id="@+id/container_linear_layout"
@@ -55,5 +55,5 @@
         android:layout_width="@dimen/progress_bar_size"
         android:layout_height="@dimen/progress_bar_size"
         android:layout_gravity="center"
-        android:visibility="visible" />
+        android:visibility="gone" />
 </FrameLayout>

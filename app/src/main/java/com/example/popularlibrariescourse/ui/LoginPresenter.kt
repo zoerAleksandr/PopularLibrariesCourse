@@ -1,11 +1,12 @@
-package com.example.popularlibrariescourse
+package com.example.popularlibrariescourse.ui
 
+import com.example.popularlibrariescourse.domain.LoginApi
 import java.lang.Thread.sleep
 
 private const val LOGIN = "Login"
 private const val PASSWORD = "Password"
 
-class LoginPresenter : LoginContract.Presenter {
+class LoginPresenter(val api: LoginApi) : LoginContract.Presenter {
     private var view: LoginContract.View? = null
     private var state: AppState? = null
 

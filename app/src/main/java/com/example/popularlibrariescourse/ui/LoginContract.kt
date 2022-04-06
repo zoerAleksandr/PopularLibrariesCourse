@@ -1,4 +1,4 @@
-package com.example.popularlibrariescourse
+package com.example.popularlibrariescourse.ui
 
 import android.os.Handler
 

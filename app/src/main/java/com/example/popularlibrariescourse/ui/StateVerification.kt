@@ -1,4 +1,4 @@
-package com.example.popularlibrariescourse
+package com.example.popularlibrariescourse.ui
 
 /*   Состояния результата проверки введенного логина и пароля на соответствие установленным   */
 
