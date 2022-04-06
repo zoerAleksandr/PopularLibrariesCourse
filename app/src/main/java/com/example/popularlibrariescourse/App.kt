@@ -8,9 +8,12 @@ import com.example.popularlibrariescourse.data.LocalLoginApIImpl
 import com.example.popularlibrariescourse.data.LoginUseCaseImpl
 import com.example.popularlibrariescourse.domain.LoginApi
 import com.example.popularlibrariescourse.domain.LoginUseCase
+import com.example.popularlibrariescourse.repository.LocalLoginRepositoryImpl
+import com.example.popularlibrariescourse.repository.LoginRepository
 
 class App : Application() {
-    private val loginApi: LoginApi by lazy { LocalLoginApIImpl() }
+    private val repository: LoginRepository by lazy { LocalLoginRepositoryImpl() }
+    private val loginApi: LoginApi by lazy { LocalLoginApIImpl(repository) }
     val loginUseCase: LoginUseCase by lazy {
         LoginUseCaseImpl(
             loginApi,
