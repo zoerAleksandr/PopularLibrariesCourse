@@ -1,12 +1,8 @@
 package com.example.popularlibrariescourse.ui
 
-import com.example.popularlibrariescourse.domain.LoginApi
-import java.lang.Thread.sleep
+import com.example.popularlibrariescourse.domain.LoginUseCase
 
-private const val LOGIN = "Login"
-private const val PASSWORD = "Password"
-
-class LoginPresenter(val api: LoginApi) : LoginContract.Presenter {
+class LoginPresenter(private val loginUseCase: LoginUseCase) : LoginContract.Presenter {
     private var view: LoginContract.View? = null
     private var state: AppState? = null
 
@@ -26,42 +22,31 @@ class LoginPresenter(val api: LoginApi) : LoginContract.Presenter {
     override fun onLogin(login: String, password: String) {
         if (checkedFieldForEmpty(login, password)) {
             view?.setProgress(true)
-            Thread {
-                sleep(1500)
-                view?.getHandler()?.post {
-                    when (dataVerification(login, password)) {
-                        is StateVerification.Success -> {
-                            state = AppState.Success
-                            view?.setSuccess()
-                        }
-                        is StateVerification.ErrorLogin -> {
-                            state = AppState.Error
-                            view?.setErrorLogin()
-                        }
-                        is StateVerification.ErrorPassword -> {
-                            state = AppState.Error
-                            view?.setErrorPassword()
-                        }
-                        is StateVerification.ErrorUnknown -> {
-                            state = AppState.Error
-                            view?.setErrorUnknown()
-                        }
+            loginUseCase.login(login, password) { result ->
+                when (result) {
+                    is StateVerification.Success -> {
+                        state = AppState.Success
+                        view?.setSuccess()
                     }
-                    view?.setProgress(false)
+                    is StateVerification.ErrorLogin -> {
+                        state = AppState.Error
+                        view?.setErrorLogin()
+                    }
+                    is StateVerification.ErrorPassword -> {
+                        state = AppState.Error
+                        view?.setErrorPassword()
+                    }
+                    is StateVerification.ErrorUnknown -> {
+                        state = AppState.Error
+                        view?.setErrorUnknown()
+                    }
                 }
-            }.start()
+            }
+            view?.setProgress(false)
         } else {
             state = AppState.Error
             view?.setErrorEmptyField()
         }
-    }
-
-    /*  Проверка введенных логина и пароля на соответствие установленным   */
-    private fun dataVerification(login: String, password: String): StateVerification {
-        return if (login == LOGIN && password == PASSWORD) StateVerification.Success
-        else if (login != LOGIN) StateVerification.ErrorLogin
-        else if (password != PASSWORD) StateVerification.ErrorPassword
-        else StateVerification.ErrorUnknown
     }
 
     /*  Проверка полей логина и пароля на пустоту  */

@@ -14,15 +14,15 @@ import com.google.android.material.snackbar.Snackbar
 
 class LoginActivity : AppCompatActivity(), LoginContract.View {
     private val binding: ActivityMainBinding by viewBinding()
-    private var presenter: LoginPresenter = initPresenter()
+    private var presenter: LoginPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         presenter = initPresenter()
-        presenter.onAttach(this)
+        presenter?.onAttach(this)
         binding.loginButton.setOnClickListener {
-            presenter.onLogin(
+            presenter?.onLogin(
                 binding.loginEditText.text.toString(),
                 binding.passwordEditText.text.toString(),
             )
@@ -30,9 +30,9 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     }
 
     private fun initPresenter(): LoginPresenter =
-        lastCustomNonConfigurationInstance as? LoginPresenter ?: LoginPresenter(app.api)
+        lastCustomNonConfigurationInstance as? LoginPresenter ?: LoginPresenter(app.loginUseCase)
 
-    override fun onRetainCustomNonConfigurationInstance(): Any = presenter
+    override fun onRetainCustomNonConfigurationInstance(): Any? = presenter
 
     override fun setSuccess() {
         binding.root.setBackgroundColor(resources.getColor(R.color.green_for_background, null))
