@@ -34,8 +34,8 @@ class LoginPresenter(private val loginUseCase: LoginUseCase) : LoginContract.Pre
                         view?.setErrorLogin(result.error)
                     }
                 }
+                view?.setProgress(false)
             }
-            view?.setProgress(false)
         } else {
             state = AppState.Error
             view?.setErrorLogin(LoginError.EMPTY_FIELD)

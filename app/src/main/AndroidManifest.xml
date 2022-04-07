@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PopularLibrariesCourse">
         <activity
+            android:name=".ui.registration.RegistrationActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">
             <intent-filter>

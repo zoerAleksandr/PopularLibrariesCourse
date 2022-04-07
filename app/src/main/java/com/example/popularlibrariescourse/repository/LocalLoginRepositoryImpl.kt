@@ -1,5 +1,6 @@
 package com.example.popularlibrariescourse.repository
 
+import android.util.Log
 import com.example.popularlibrariescourse.data.UserProfile
 
 class LocalLoginRepositoryImpl : LoginRepository {
@@ -12,17 +13,15 @@ class LocalLoginRepositoryImpl : LoginRepository {
     override fun addUser(
         login: String,
         password: String,
-        passwordConfirmation: String
     ): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun login(login: String, password: String): UserProfile {
-        TODO("Not yet implemented")
-    }
-
-    override fun recoverPassword(login: String): String {
-        TODO("Not yet implemented")
+        for (user in listUserProfile) {
+            if (user.login == login) {
+                Log.d("Debug", "${user.login} == $login")
+                return false
+            }
+        }
+        listUserProfile.add(UserProfile(login, password))
+        return true
     }
 
     override fun getAllUserProfile(): MutableList<UserProfile> = listUserProfile

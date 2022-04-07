@@ -1,5 +1,6 @@
 package com.example.popularlibrariescourse.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.popularlibrariescourse.R
 import com.example.popularlibrariescourse.app
 import com.example.popularlibrariescourse.databinding.ActivityMainBinding
+import com.example.popularlibrariescourse.ui.registration.RegistrationActivity
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
 
@@ -24,6 +26,10 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
                 binding.loginEditText.text.toString(),
                 binding.passwordEditText.text.toString(),
             )
+        }
+
+        binding.registrationButton.setOnClickListener {
+            startActivity(Intent(this, RegistrationActivity::class.java))
         }
     }
 
