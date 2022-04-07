@@ -2,8 +2,9 @@ package com.example.popularlibrariescourse.repository
 
 import com.example.popularlibrariescourse.data.UserProfile
 
-class LocalLoginRepositoryImpl: LoginRepository {
+class LocalLoginRepositoryImpl : LoginRepository {
     private val listUserProfile = mutableListOf<UserProfile>()
+
     init {
         listUserProfile.add(UserProfile("Login", "Password"))
     }

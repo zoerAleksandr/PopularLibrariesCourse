@@ -1,6 +1,7 @@
-package com.example.popularlibrariescourse.ui
+package com.example.popularlibrariescourse.ui.login
 
 import com.example.popularlibrariescourse.domain.LoginUseCase
+import com.example.popularlibrariescourse.ui.AppState
 
 class LoginPresenter(private val loginUseCase: LoginUseCase) : LoginContract.Presenter {
     private var view: LoginContract.View? = null
@@ -30,22 +31,14 @@ class LoginPresenter(private val loginUseCase: LoginUseCase) : LoginContract.Pre
                     }
                     is StateVerification.ErrorLogin -> {
                         state = AppState.Error
-                        view?.setErrorLogin()
-                    }
-                    is StateVerification.ErrorPassword -> {
-                        state = AppState.Error
-                        view?.setErrorPassword()
-                    }
-                    is StateVerification.ErrorUnknown -> {
-                        state = AppState.Error
-                        view?.setErrorUnknown()
+                        view?.setErrorLogin(result.error)
                     }
                 }
             }
             view?.setProgress(false)
         } else {
             state = AppState.Error
-            view?.setErrorEmptyField()
+            view?.setErrorLogin(LoginError.EMPTY_FIELD)
         }
     }
 

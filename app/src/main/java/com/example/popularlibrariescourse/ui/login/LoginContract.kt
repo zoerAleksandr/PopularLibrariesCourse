@@ -1,4 +1,4 @@
-package com.example.popularlibrariescourse.ui
+package com.example.popularlibrariescourse.ui.login
 
 import android.os.Handler
 
@@ -7,12 +7,8 @@ class LoginContract {
     interface View {
         fun setSuccess()
         fun setError()
-        fun setErrorEmptyField()
-        fun setErrorLogin()
-        fun setErrorPassword()
-        fun setErrorUnknown()
+        fun setErrorLogin(error: LoginError)
         fun setProgress(progress: Boolean)
-        fun getHandler(): Handler
     }
 
     interface Presenter {

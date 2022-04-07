@@ -1,8 +1,6 @@
-package com.example.popularlibrariescourse.ui
+package com.example.popularlibrariescourse.ui.login
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -47,38 +45,11 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         binding.root.setBackgroundColor(resources.getColor(R.color.red_for_background, null))
     }
 
-    override fun setErrorEmptyField() {
+    override fun setErrorLogin(error: LoginError) {
         binding.root.setBackgroundColor(resources.getColor(R.color.red_for_background, null))
         Snackbar.make(
             binding.root,
-            resources.getString(R.string.error_text_empty_fields),
-            LENGTH_LONG
-        ).show()
-    }
-
-    override fun setErrorLogin() {
-        binding.root.setBackgroundColor(resources.getColor(R.color.red_for_background, null))
-        Snackbar.make(
-            binding.root,
-            resources.getString(R.string.error_text_login),
-            LENGTH_LONG
-        ).show()
-    }
-
-    override fun setErrorPassword() {
-        binding.root.setBackgroundColor(resources.getColor(R.color.red_for_background, null))
-        Snackbar.make(
-            binding.root,
-            resources.getString(R.string.error_text_password),
-            LENGTH_LONG
-        ).show()
-    }
-
-    override fun setErrorUnknown() {
-        binding.root.setBackgroundColor(resources.getColor(R.color.red_for_background, null))
-        Snackbar.make(
-            binding.root,
-            resources.getString(R.string.error_text_unknown),
+            error.message,
             LENGTH_LONG
         ).show()
     }
@@ -94,6 +65,4 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
             binding.progressBar.visibility = View.GONE
         }
     }
-
-    override fun getHandler(): Handler = Handler(Looper.getMainLooper())
 }

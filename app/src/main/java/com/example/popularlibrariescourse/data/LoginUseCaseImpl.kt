@@ -3,7 +3,7 @@ package com.example.popularlibrariescourse.data
 import android.os.Handler
 import com.example.popularlibrariescourse.domain.LoginApi
 import com.example.popularlibrariescourse.domain.LoginUseCase
-import com.example.popularlibrariescourse.ui.StateVerification
+import com.example.popularlibrariescourse.ui.login.StateVerification
 import java.lang.Thread.sleep
 
 class LoginUseCaseImpl(

@@ -1,6 +1,6 @@
 package com.example.popularlibrariescourse.domain
 
-import com.example.popularlibrariescourse.ui.StateVerification
+import com.example.popularlibrariescourse.ui.login.StateVerification
 
 interface LoginApi {
     fun registration(login: String, password: String, passwordConfirmation: String): Boolean

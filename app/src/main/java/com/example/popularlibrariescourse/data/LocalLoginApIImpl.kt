@@ -1,8 +1,10 @@
 package com.example.popularlibrariescourse.data
 
+import android.util.Log
 import com.example.popularlibrariescourse.domain.LoginApi
 import com.example.popularlibrariescourse.repository.LoginRepository
-import com.example.popularlibrariescourse.ui.StateVerification
+import com.example.popularlibrariescourse.ui.login.LoginError
+import com.example.popularlibrariescourse.ui.login.StateVerification
 
 class LocalLoginApIImpl(private val repository: LoginRepository) : LoginApi {
 
@@ -16,12 +18,16 @@ class LocalLoginApIImpl(private val repository: LoginRepository) : LoginApi {
 
     override fun login(login: String, password: String): StateVerification {
         val listUser = repository.getAllUserProfile()
-        var state: StateVerification = StateVerification.ErrorUnknown
+        var state: StateVerification = StateVerification.ErrorLogin(LoginError.UNKNOWN)
         for (user in listUser) {
             if (user.login == login && user.password == password) {
                 state = StateVerification.Success
-            } else {
-                StateVerification.ErrorUnknown
+            }
+            else if (user.login != login){
+                state = StateVerification.ErrorLogin(LoginError.INCORRECT_LOGIN)
+            }
+            else if (user.login == login && user.password != password){
+                state = StateVerification.ErrorLogin(LoginError.INCORRECT_PASSWORD)
             }
         }
         return state
