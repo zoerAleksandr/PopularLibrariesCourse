@@ -10,9 +10,9 @@ import java.lang.Thread.sleep
 class LoginUseCaseImpl(
     private val api: LoginApi,
     private val uiHandler: Handler
-): LoginUseCase {
+) : LoginUseCase {
     override fun login(login: String, password: String, callback: (StateVerification) -> Unit) {
-        Thread{
+        Thread {
             val result = api.login(login, password)
             uiHandler.post {
                 sleep(1_000)
@@ -26,7 +26,7 @@ class LoginUseCaseImpl(
         password: String,
         callback: (StateRegistration) -> Unit
     ) {
-        Thread{
+        Thread {
             val result = api.registration(login, password)
             uiHandler.post {
                 sleep(2_000)

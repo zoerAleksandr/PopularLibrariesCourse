@@ -4,7 +4,7 @@ import com.example.popularlibrariescourse.domain.LoginApi
 import com.example.popularlibrariescourse.repository.LoginRepository
 import com.example.popularlibrariescourse.ui.login.LoginError
 import com.example.popularlibrariescourse.ui.login.StateVerification
-import com.example.popularlibrariescourse.ui.registration.RegistrationError
+import com.example.popularlibrariescourse.ui.registration.ErrorType
 import com.example.popularlibrariescourse.ui.registration.StateRegistration
 
 class LocalLoginApIImpl(private val repository: LoginRepository) : LoginApi {
@@ -16,10 +16,10 @@ class LocalLoginApIImpl(private val repository: LoginRepository) : LoginApi {
         val listUser = repository.getAllUserProfile()
         var loginTaken = true
         var state: StateRegistration =
-            StateRegistration.ErrorRegistration(RegistrationError.UNKNOWN)
+            StateRegistration.Error(ErrorType.UNKNOWN)
         for (user in listUser) {
             if (user.login == login) {
-                state = StateRegistration.ErrorRegistration(RegistrationError.LOGIN_TAKEN)
+                state = StateRegistration.Error(ErrorType.LOGIN_TAKEN)
                 loginTaken = false
                 break
             }
@@ -27,7 +27,7 @@ class LocalLoginApIImpl(private val repository: LoginRepository) : LoginApi {
 
         if (loginTaken) {
             repository.addUser(login, password)
-            state = StateRegistration.Success
+            state = StateRegistration.Success()
         }
         return state
     }

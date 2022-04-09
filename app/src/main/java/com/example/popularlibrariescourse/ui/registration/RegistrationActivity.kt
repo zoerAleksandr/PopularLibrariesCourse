@@ -24,56 +24,55 @@ class RegistrationActivity : AppCompatActivity() {
                 binding.passwordConfirmationEditText.text.toString()
             )
         }
-        viewModel?.isSuccess?.subscribe {
-            if (it == true) {
-                binding.containerLinearLayout.setBackgroundColor(
-                    resources.getColor(
-                        R.color.green_for_background,
-                        null
-                    )
-                )
+
+        viewModel?.showText?.subscribe {
+            it?.let {
                 Snackbar.make(
                     binding.root,
-                    "Учетная запись создана",
+                    it,
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
         }
 
-        viewModel?.isProgress?.subscribe {
-            if (it == true) {
-                binding.containerLinearLayout.alpha = 0.3f
-                binding.registrationButton.isEnabled = false
-                binding.progressBar.visibility = View.VISIBLE
-            } else {
-                binding.containerLinearLayout.alpha = 1f
-                binding.registrationButton.isEnabled = true
-                binding.progressBar.visibility = View.GONE
-            }
-        }
-
-        viewModel?.errorRegistration?.subscribe { error ->
-            error?.let {
-                binding.containerLinearLayout.setBackgroundColor(
-                    resources.getColor(
-                        R.color.red_for_background,
-                        null
+        viewModel?.stateRegistration?.subscribe { state ->
+            when (state) {
+                is StateRegistration.Success -> {
+                    binding.containerLinearLayout.setBackgroundColor(
+                        resources.getColor(
+                            R.color.green_for_background,
+                            null
+                        )
                     )
-                )
-                Snackbar.make(
-                    binding.root,
-                    it.message,
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                }
+                is StateRegistration.Loading -> {
+                    if (state.loading == true) {
+                        binding.containerLinearLayout.alpha = 0.3f
+                        binding.registrationButton.isEnabled = false
+                        binding.progressBar.visibility = View.VISIBLE
+                    } else {
+                        binding.containerLinearLayout.alpha = 1f
+                        binding.registrationButton.isEnabled = true
+                        binding.progressBar.visibility = View.GONE
+                    }
+                }
+                is StateRegistration.Error -> {
+                    binding.containerLinearLayout.setBackgroundColor(
+                        resources.getColor(
+                            R.color.red_for_background,
+                            null
+                        )
+                    )
+                }
+                else -> {}
             }
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel?.isProgress?.unsubscribe()
-        viewModel?.isSuccess?.unsubscribe()
-        viewModel?.errorRegistration?.unsubscribe()
+        viewModel?.stateRegistration?.unsubscribe()
+        viewModel?.showText?.unsubscribe()
     }
 
 

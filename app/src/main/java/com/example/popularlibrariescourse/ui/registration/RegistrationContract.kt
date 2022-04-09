@@ -4,7 +4,7 @@ class RegistrationContract {
     interface View {
         fun setSuccess()
         fun setError()
-        fun setErrorRegistration(error: RegistrationError)
+        fun setErrorRegistration(state: StateRegistration)
         fun setProgress(progress: Boolean)
     }
 

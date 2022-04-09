@@ -3,10 +3,8 @@ package com.example.popularlibrariescourse.ui.registration
 import com.example.popularlibrariescourse.utils.Publisher
 
 interface RegistrationViewModelContract {
-    val isSuccess: Publisher<Boolean>
-    val isError: Publisher<Boolean>
-    val errorRegistration: Publisher<RegistrationError>
-    val isProgress: Publisher<Boolean>
+    val stateRegistration: Publisher<StateRegistration>
+    val showText: Publisher<String>
 
     fun onRegistration(login: String, password: String, passwordConfirmation: String)
 }
