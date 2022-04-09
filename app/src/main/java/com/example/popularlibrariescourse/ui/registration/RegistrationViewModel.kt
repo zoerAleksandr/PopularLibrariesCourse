@@ -8,6 +8,7 @@ class RegistrationViewModel(private val loginUseCase: LoginUseCase) :
     override val stateRegistration: Publisher<StateRegistration> = Publisher()
 
     override val showText: Publisher<String> = Publisher(true)
+    override val showProgress: Publisher<Boolean> = Publisher(true)
 
     override fun onRegistration(login: String, password: String, passwordConfirmation: String) {
         if (checkedFieldForEmpty(login, password, passwordConfirmation)) {
@@ -17,10 +18,10 @@ class RegistrationViewModel(private val loginUseCase: LoginUseCase) :
             stateRegistration.post(StateRegistration.Error(ErrorType.INCORRECT_PASSWORD_CONFIRMATION))
             showText.post(ErrorType.INCORRECT_PASSWORD_CONFIRMATION.message)
         } else {
-            stateRegistration.post(StateRegistration.Loading(true))
+            showProgress.post(true)
             loginUseCase.addUser(login, password) { state ->
                 when (state) {
-                    StateRegistration.Success() -> {
+                    is StateRegistration.Success -> {
                         stateRegistration.post(StateRegistration.Success())
                         showText.post(StateRegistration.Success().message)
                     }
@@ -34,7 +35,7 @@ class RegistrationViewModel(private val loginUseCase: LoginUseCase) :
                     }
                     else -> {}
                 }
-                stateRegistration.post(StateRegistration.Loading(false))
+                showProgress.post(false)
             }
         }
     }
