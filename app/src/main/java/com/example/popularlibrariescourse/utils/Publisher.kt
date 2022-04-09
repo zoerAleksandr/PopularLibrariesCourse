@@ -1,19 +1,22 @@
 package com.example.popularlibrariescourse.utils
 
 class Publisher<T> {
-    private var listSubscriber: MutableSet<Subscriber<T>> = mutableSetOf()
+    private val listSubscriber: MutableSet<Subscriber<T>> = mutableSetOf()
+    private var value: T? = null
 
     fun subscribe(subscriber: Subscriber<T>) {
         listSubscriber.add(subscriber)
+        value?.let { subscriber.invoke(it) }
     }
 
-    fun unsubscribe(subscriber: Subscriber<T>?){
-        subscriber?.let {
-            listSubscriber.remove(it)
-        }
+    fun unsubscribe() {
+        listSubscriber.clear()
     }
 
-    fun post(value: Any) {
-        listSubscriber.forEach { it.post(value) }
+    fun post(value: T) {
+        listSubscriber.forEach { it.invoke(value) }
+        this.value = value
     }
 }
+
+private typealias Subscriber<T> = (T?) -> Unit

@@ -9,76 +9,77 @@ import com.example.popularlibrariescourse.app
 import com.example.popularlibrariescourse.databinding.ActivityRegistrationBinding
 import com.google.android.material.snackbar.Snackbar
 
-class RegistrationActivity : AppCompatActivity(), RegistrationContract.View {
+class RegistrationActivity : AppCompatActivity() {
     private val binding: ActivityRegistrationBinding by viewBinding()
-    private var presenter: RegistrationPresenter? = null
+    private var viewModel: RegistrationViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
-        presenter = initPresenter()
-        presenter?.onAttach(this)
+        viewModel = initViewModel()
         binding.registrationButton.setOnClickListener {
-            presenter?.onRegistration(
+            viewModel?.onRegistration(
                 binding.loginEditText.text.toString(),
                 binding.passwordEditText.text.toString(),
                 binding.passwordConfirmationEditText.text.toString()
             )
         }
-    }
+        viewModel?.isSuccess?.subscribe {
+            if (it == true) {
+                binding.containerLinearLayout.setBackgroundColor(
+                    resources.getColor(
+                        R.color.green_for_background,
+                        null
+                    )
+                )
+                Snackbar.make(
+                    binding.root,
+                    "Учетная запись создана",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+        }
 
-    private fun initPresenter(): RegistrationPresenter =
-        lastCustomNonConfigurationInstance as? RegistrationPresenter
-            ?: RegistrationPresenter(app.loginUseCase)
+        viewModel?.isProgress?.subscribe {
+            if (it == true) {
+                binding.containerLinearLayout.alpha = 0.3f
+                binding.registrationButton.isEnabled = false
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.containerLinearLayout.alpha = 1f
+                binding.registrationButton.isEnabled = true
+                binding.progressBar.visibility = View.GONE
+            }
+        }
 
-    override fun onRetainCustomNonConfigurationInstance(): Any? = presenter
-
-    override fun setSuccess() {
-        binding.containerLinearLayout.setBackgroundColor(
-            resources.getColor(
-                R.color.green_for_background,
-                null
-            )
-        )
-        Snackbar.make(
-            binding.root,
-            "Учетная запись создана",
-            Snackbar.LENGTH_SHORT
-        ).show()
-    }
-
-    override fun setError() {
-        binding.containerLinearLayout.setBackgroundColor(
-            resources.getColor(
-                R.color.red_for_background,
-                null
-            )
-        )
-    }
-
-    override fun setErrorRegistration(error: RegistrationError) {
-        binding.containerLinearLayout.setBackgroundColor(
-            resources.getColor(
-                R.color.red_for_background,
-                null
-            )
-        )
-        Snackbar.make(
-            binding.root,
-            error.message,
-            Snackbar.LENGTH_SHORT
-        ).show()
-    }
-
-    override fun setProgress(progress: Boolean) {
-        if (progress) {
-            binding.containerLinearLayout.alpha = 0.3f
-            binding.registrationButton.isEnabled = false
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.containerLinearLayout.alpha = 1f
-            binding.registrationButton.isEnabled = true
-            binding.progressBar.visibility = View.GONE
+        viewModel?.errorRegistration?.subscribe { error ->
+            error?.let {
+                binding.containerLinearLayout.setBackgroundColor(
+                    resources.getColor(
+                        R.color.red_for_background,
+                        null
+                    )
+                )
+                Snackbar.make(
+                    binding.root,
+                    it.message,
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel?.isProgress?.unsubscribe()
+        viewModel?.isSuccess?.unsubscribe()
+        viewModel?.errorRegistration?.unsubscribe()
+    }
+
+
+    private fun initViewModel(): RegistrationViewModel =
+        lastCustomNonConfigurationInstance as? RegistrationViewModel
+            ?: RegistrationViewModel(app.loginUseCase)
+
+    override fun onRetainCustomNonConfigurationInstance(): Any? = viewModel
 }
