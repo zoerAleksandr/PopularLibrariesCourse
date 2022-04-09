@@ -28,10 +28,10 @@ class LoginUseCaseImpl(
     ) {
         Thread {
             val result = api.registration(login, password)
-            uiHandler.post {
+//            uiHandler.post {
                 sleep(2_000)
                 callback(result)
-            }
+//            }
         }.start()
     }
 }

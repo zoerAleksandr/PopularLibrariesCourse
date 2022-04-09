@@ -1,14 +1,17 @@
 package com.example.popularlibrariescourse.utils
 
+import android.os.Handler
+
 class Publisher<T>(private val singleTask: Boolean = false) {
     private val listSubscriber: MutableSet<Subscriber<T>> = mutableSetOf()
     private var value: T? = null
     private var hasFirstValue = false
 
-    fun subscribe(subscriber: Subscriber<T>) {
+    fun subscribe(handler: Handler, callback: (T?) -> Unit) {
+        val subscriber = Subscriber<T>(handler, callback)
         listSubscriber.add(subscriber)
         if (hasFirstValue) {
-            value?.let { subscriber.invoke(it) }
+            subscriber.post(value)
         }
     }
 
@@ -21,8 +24,14 @@ class Publisher<T>(private val singleTask: Boolean = false) {
             hasFirstValue = true
             this.value = value
         }
-        listSubscriber.forEach { it.invoke(value) }
+        listSubscriber.forEach { it.post(value) }
     }
 }
 
-private typealias Subscriber<T> = (T?) -> Unit
+private data class Subscriber<T>(val handler: Handler, val callback: (T?) -> Unit) {
+    fun post(value: T?) {
+        handler.post {
+            callback.invoke(value)
+        }
+    }
+}

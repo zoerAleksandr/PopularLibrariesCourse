@@ -1,6 +1,8 @@
 package com.example.popularlibrariescourse.ui.registration
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 class RegistrationActivity : AppCompatActivity() {
     private val binding: ActivityRegistrationBinding by viewBinding()
     private var viewModel: RegistrationViewModel? = null
+    private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +29,7 @@ class RegistrationActivity : AppCompatActivity() {
             )
         }
 
-        viewModel?.showText?.subscribe { text ->
+        viewModel?.showText?.subscribe(handler) { text ->
             text?.let {
                 Snackbar.make(
                     binding.root,
@@ -36,7 +39,7 @@ class RegistrationActivity : AppCompatActivity() {
             }
         }
 
-        viewModel?.showProgress?.subscribe { loading ->
+        viewModel?.showProgress?.subscribe(handler) { loading ->
             if (loading == true) {
                 binding.containerLinearLayout.alpha = 0.3f
                 binding.registrationButton.isEnabled = false
@@ -48,7 +51,7 @@ class RegistrationActivity : AppCompatActivity() {
             }
         }
 
-        viewModel?.stateRegistration?.subscribe { state ->
+        viewModel?.stateRegistration?.subscribe(handler) { state ->
             Log.d("Debug", "$state")
             when (state) {
                 is StateRegistration.Success -> {
