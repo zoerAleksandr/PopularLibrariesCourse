@@ -3,7 +3,7 @@ package com.example.popularlibrariescourse.data
 import com.example.popularlibrariescourse.domain.LoginApi
 import com.example.popularlibrariescourse.repository.LoginRepository
 import com.example.popularlibrariescourse.ui.login.LoginError
-import com.example.popularlibrariescourse.ui.login.StateVerification
+import com.example.popularlibrariescourse.ui.login.StateLogin
 import com.example.popularlibrariescourse.ui.registration.ErrorType
 import com.example.popularlibrariescourse.ui.registration.StateRegistration
 
@@ -32,16 +32,16 @@ class LocalLoginApIImpl(private val repository: LoginRepository) : LoginApi {
         return state
     }
 
-    override fun login(login: String, password: String): StateVerification {
+    override fun login(login: String, password: String): StateLogin {
         val listUser = repository.getAllUserProfile()
-        var state: StateVerification = StateVerification.ErrorLogin(LoginError.UNKNOWN)
+        var state: StateLogin = StateLogin.ErrorLogin(LoginError.UNKNOWN)
         for (user in listUser) {
             if (user.login == login && user.password == password) {
-                state = StateVerification.Success
+                state = StateLogin.Success
             } else if (user.login != login) {
-                state = StateVerification.ErrorLogin(LoginError.INCORRECT_LOGIN)
+                state = StateLogin.ErrorLogin(LoginError.INCORRECT_LOGIN)
             } else if (user.login == login && user.password != password) {
-                state = StateVerification.ErrorLogin(LoginError.INCORRECT_PASSWORD)
+                state = StateLogin.ErrorLogin(LoginError.INCORRECT_PASSWORD)
             }
         }
         return state
