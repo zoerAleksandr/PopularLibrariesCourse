@@ -1,4 +1,4 @@
-package com.example.popularlibrariescourse
+package com.example.popularlibrariescourse.ui
 
 /*  Состояния приложения для востановления состояния при пересоздании Presenter  */
 

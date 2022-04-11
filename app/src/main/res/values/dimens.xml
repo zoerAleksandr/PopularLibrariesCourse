@@ -3,4 +3,5 @@
     <dimen name="padding_root_main_activity">16dp</dimen>
     <dimen name="margin_vertical_main_activity">8dp</dimen>
     <dimen name="width_btn_login">180dp</dimen>
+    <dimen name="progress_bar_size">80dp</dimen>
 </resources>
