@@ -11,7 +11,9 @@ class LoginViewModel(
     private val liveData: MutableLiveData<AppState> = MutableLiveData()
 ) : ViewModel() {
 
-    fun onLogin(login: String, password: String): LiveData<AppState> {
+    fun getState(): LiveData<AppState> = liveData
+
+    fun onLogin(login: String, password: String) {
         if (checkedFieldForEmpty(login, password)) {
             liveData.value = AppState.Loading
             useCase.login(login, password) { stateLogin ->
@@ -34,7 +36,6 @@ class LoginViewModel(
         } else {
             liveData.value = AppState.Error(LoginError.EMPTY_FIELD.message)
         }
-        return liveData
     }
 
     private fun checkedFieldForEmpty(login: String, password: String) =
