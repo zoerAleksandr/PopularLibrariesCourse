@@ -1,7 +1,7 @@
-package com.example.popularlibrariescourse.repository
+package com.example.popularlibrariescourse.data.repository
 
 import android.util.Log
-import com.example.popularlibrariescourse.data.UserProfile
+import com.example.popularlibrariescourse.domain.UserProfile
 
 class LocalLoginRepositoryImpl : LoginRepository {
     private val listUserProfile = mutableListOf<UserProfile>()

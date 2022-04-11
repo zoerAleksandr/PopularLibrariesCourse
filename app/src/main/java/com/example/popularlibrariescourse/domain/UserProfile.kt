@@ -1,4 +1,4 @@
-package com.example.popularlibrariescourse.data
+package com.example.popularlibrariescourse.domain
 
 data class UserProfile(
     val login: String,

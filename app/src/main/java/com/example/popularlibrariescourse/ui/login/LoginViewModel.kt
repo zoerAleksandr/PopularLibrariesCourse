@@ -19,7 +19,7 @@ class LoginViewModel(
             useCase.login(login, password) { stateLogin ->
                 when (stateLogin) {
                     is StateLogin.Success -> {
-                        liveData.value = AppState.Success()
+                        liveData.value = AppState.Success(StateLogin.Success().message)
                     }
                     StateLogin.ErrorLogin(LoginError.INCORRECT_LOGIN) -> {
                         liveData.value = AppState.Error(LoginError.INCORRECT_LOGIN.message)
