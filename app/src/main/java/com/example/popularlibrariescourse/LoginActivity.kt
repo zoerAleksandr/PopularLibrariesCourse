@@ -1,11 +1,10 @@
 package com.example.popularlibrariescourse
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.popularlibrariescourse.data.RepositoryImpl
 import com.example.popularlibrariescourse.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
@@ -18,7 +17,6 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         presenter = initPresenter()
-        presenter.onAttach(this)
         binding.btnLogin.setOnClickListener {
             presenter.onLogin(
                 binding.editLogin.text.toString(),
@@ -28,7 +26,10 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     }
 
     private fun initPresenter(): LoginPresenter =
-        lastCustomNonConfigurationInstance as? LoginPresenter ?: LoginPresenter()
+        lastCustomNonConfigurationInstance as? LoginPresenter ?: LoginPresenter(
+            this,
+            RepositoryImpl()
+        )
 
     override fun onRetainCustomNonConfigurationInstance(): Any = presenter
 
@@ -41,42 +42,11 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         ).show()
     }
 
-    override fun setError() {
-        binding.root.setBackgroundColor(resources.getColor(R.color.red_for_background, null))
-    }
-
-    override fun setErrorEmptyField() {
+    override fun setError(message: String) {
         binding.root.setBackgroundColor(resources.getColor(R.color.red_for_background, null))
         Snackbar.make(
             binding.root,
-            resources.getString(R.string.error_text_empty_fields),
-            LENGTH_LONG
-        ).show()
-    }
-
-    override fun setErrorLogin() {
-        binding.root.setBackgroundColor(resources.getColor(R.color.red_for_background, null))
-        Snackbar.make(
-            binding.root,
-            resources.getString(R.string.error_text_login),
-            LENGTH_LONG
-        ).show()
-    }
-
-    override fun setErrorPassword() {
-        binding.root.setBackgroundColor(resources.getColor(R.color.red_for_background, null))
-        Snackbar.make(
-            binding.root,
-            resources.getString(R.string.error_text_password),
-            LENGTH_LONG
-        ).show()
-    }
-
-    override fun setErrorUnknown() {
-        binding.root.setBackgroundColor(resources.getColor(R.color.red_for_background, null))
-        Snackbar.make(
-            binding.root,
-            resources.getString(R.string.error_text_unknown),
+            message,
             LENGTH_LONG
         ).show()
     }
@@ -93,5 +63,5 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         }
     }
 
-    override fun getHandler(): Handler = Handler(Looper.getMainLooper())
+//    override fun getHandler(): Handler = Handler(Looper.getMainLooper())
 }
