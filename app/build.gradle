@@ -47,4 +47,12 @@ dependencies {
     // ViewBindingPropertyDelegate
     implementation 'com.github.kirich1409:viewbindingpropertydelegate:1.5.3'
     implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3'
+
+    //Mockito
+    testImplementation "org.mockito:mockito-core:2.19.0"
+    testImplementation 'org.mockito:mockito-inline:2.8.9'
+    testImplementation('com.nhaarman:mockito-kotlin:1.5.0') {
+        exclude group: 'org.jetbrains.kotlin'
+        exclude group: 'org.mockito'
+    }
 }
