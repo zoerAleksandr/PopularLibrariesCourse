@@ -3,7 +3,7 @@ package com.example.popularlibrariescourse
 import com.example.popularlibrariescourse.data.Repository
 import com.example.popularlibrariescourse.data.VerificationLoginCallback
 
-private const val ERROR_EMPTY = "empty field"
+const val ERROR_EMPTY = "empty field"
 
 class LoginPresenter(
     private val view: LoginContract.View,

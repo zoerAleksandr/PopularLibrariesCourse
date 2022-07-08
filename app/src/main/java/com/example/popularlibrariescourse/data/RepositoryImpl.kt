@@ -1,10 +1,10 @@
 package com.example.popularlibrariescourse.data
 
-private const val LOGIN = "Login"
-private const val PASSWORD = "Password"
+const val LOGIN = "Login"
+const val PASSWORD = "Password"
 
-private const val ERROR_PASSWORD = "incorrect password"
-private const val ERROR_LOGIN = "incorrect login"
+const val ERROR_PASSWORD = "incorrect password"
+const val ERROR_LOGIN = "incorrect login"
 
 class RepositoryImpl : Repository {
 
