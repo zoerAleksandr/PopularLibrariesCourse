@@ -50,7 +50,7 @@ dependencies {
     implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3'
 
     //Mockito
-    testImplementation "org.mockito:mockito-core:2.19.0"
+    testImplementation "org.mockito:mockito-core:4.6.1"
     testImplementation 'org.mockito:mockito-inline:2.8.9'
     testImplementation('com.nhaarman:mockito-kotlin:1.5.0') {
         exclude group: 'org.jetbrains.kotlin'
